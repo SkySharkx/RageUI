@@ -300,6 +300,13 @@ function RageUI.CloseAll()
     ResetScriptGfxAlign()
 end
 
+function RageUI.CloseAll2()
+    local CurrentMenu = RageUI.CurrentMenu;
+    if CurrentMenu ~= nil then
+        RageUI.Visible(CurrentMenu, false)
+    end
+end
+
 function RageUI.Banner()
     local CurrentMenu = RageUI.CurrentMenu
     if (CurrentMenu.Display.Header) then
@@ -357,28 +364,37 @@ end
 
 function RageUI.Background()
     local CurrentMenu = RageUI.CurrentMenu;
-    if (CurrentMenu.Display.Background) then
-        RageUI.ItemsSafeZone(CurrentMenu)
-        SetScriptGfxDrawOrder(0)
-        Graphics.Sprite(RageUI.Settings.Items.Background.Dictionary, RageUI.Settings.Items.Background.Texture, CurrentMenu.X, CurrentMenu.Y + RageUI.Settings.Items.Background.Y + CurrentMenu.SubtitleHeight, RageUI.Settings.Items.Background.Width + CurrentMenu.WidthOffset, RageUI.ItemOffset, 0, 0, 0, 0, 255)
-        SetScriptGfxDrawOrder(1)
+    if CurrentMenu ~= nil then
+        if (CurrentMenu.Display.Background) then
+            RageUI.ItemsSafeZone(CurrentMenu)
+            SetScriptGfxDrawOrder(0)
+            Graphics.Sprite(RageUI.Settings.Items.Background.Dictionary, RageUI.Settings.Items.Background.Texture, CurrentMenu.X, CurrentMenu.Y + RageUI.Settings.Items.Background.Y + CurrentMenu.SubtitleHeight, RageUI.Settings.Items.Background.Width + CurrentMenu.WidthOffset, RageUI.ItemOffset, 0, 0, 0, 0, 255)
+            SetScriptGfxDrawOrder(1)
+        end
     end
 end
 
 function RageUI.Description()
     local CurrentMenu = RageUI.CurrentMenu;
     local Description = RageUI.Settings.Items.Description;
-    if CurrentMenu.Description ~= nil then
-        RageUI.ItemsSafeZone(CurrentMenu)
-        Graphics.Rectangle(CurrentMenu.X, CurrentMenu.Y + Description.Bar.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Description.Bar.Width + CurrentMenu.WidthOffset, Description.Bar.Height, 0, 0, 0, 255)
-        Graphics.Sprite(Description.Background.Dictionary, Description.Background.Texture, CurrentMenu.X, CurrentMenu.Y + Description.Background.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Description.Background.Width + CurrentMenu.WidthOffset, CurrentMenu.DescriptionHeight, 0, 0, 0, 255)
-        Graphics.Text(CurrentMenu.Description, CurrentMenu.X + Description.Text.X, CurrentMenu.Y + Description.Text.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, Description.Text.Scale, 255, 255, 255, 255, nil, false, false, Description.Background.Width + CurrentMenu.WidthOffset - 8.0)
-        RageUI.ItemOffset = RageUI.ItemOffset + CurrentMenu.DescriptionHeight + Description.Bar.Y
+    if CurrentMenu ~= nil then
+        if CurrentMenu.Description ~= nil then
+            RageUI.ItemsSafeZone(CurrentMenu)
+            Graphics.Rectangle(CurrentMenu.X, CurrentMenu.Y + Description.Bar.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Description.Bar.Width + CurrentMenu.WidthOffset, Description.Bar.Height, 0, 0, 0, 255)
+            Graphics.Sprite(Description.Background.Dictionary, Description.Background.Texture, CurrentMenu.X, CurrentMenu.Y + Description.Background.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, Description.Background.Width + CurrentMenu.WidthOffset, CurrentMenu.DescriptionHeight, 0, 0, 0, 255)
+            Graphics.Text(CurrentMenu.Description, CurrentMenu.X + Description.Text.X, CurrentMenu.Y + Description.Text.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, Description.Text.Scale, 255, 255, 255, 255, nil, false, false, Description.Background.Width + CurrentMenu.WidthOffset - 8.0)
+            RageUI.ItemOffset = RageUI.ItemOffset + CurrentMenu.DescriptionHeight + Description.Bar.Y
+        end
     end
 end
 
 function RageUI.Render()
     local CurrentMenu = RageUI.CurrentMenu;
+    
+    if CurrentMenu == nil then
+        return
+    end
+    
     if CurrentMenu.Safezone then
         ResetScriptGfxAlign()
     end
