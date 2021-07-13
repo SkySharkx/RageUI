@@ -224,15 +224,17 @@ end
 ---@param Panel fun(Panel:Panels
 function RageUIMenus:IsVisible(Item, Panel)
 	if (RageUI.Visible(self)) and (UpdateOnscreenKeyboard() ~= 0) and (UpdateOnscreenKeyboard() ~= 3) then
-		RageUI.Banner()
-		RageUI.Subtitle()
-		Item(Items);
-		RageUI.Background();
-		RageUI.Navigation();
-		RageUI.Description();
-		Panel(Panels);
-		RageUI.PoolMenus.Timer = 1
-		RageUI.Render()
+		if RageUI.CurrentMenu ~= nil then
+			RageUI.Banner()
+			RageUI.Subtitle()
+			Item(Items);
+			RageUI.Background();
+			RageUI.Navigation();
+			RageUI.Description();
+			Panel(Panels);
+			RageUI.PoolMenus.Timer = 1
+			RageUI.Render()
+		end
 	end
 end
 
