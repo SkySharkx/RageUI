@@ -58,6 +58,11 @@ Items = {}
 ---@return void
 function Items:AddButton(Label, Description, Style, Actions, Submenu)
     local CurrentMenu = RageUI.CurrentMenu
+    
+    if CurrentMenu == nil then
+        return
+    end
+    
     local Option = RageUI.Options + 1
     if CurrentMenu.Pagination.Minimum <= Option and CurrentMenu.Pagination.Maximum >= Option then
         local Active = CurrentMenu.Index == Option
